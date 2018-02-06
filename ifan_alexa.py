@@ -76,11 +76,23 @@ def set_max_speed_on_modbus():
 
 
 @ask.intent("INTENT_IFAN_MinSpeed")
-
+def set_min_speed_on_modbus():
+    response = ifan_interface.set_speed(1)
+    return process_response(response)
 
 
 @ask.intent("INTENT_IFAN_SpeedUp")
+def inc_speed_on_modbus():
+    response = ifan_interface.inc_dec_speed(1)
+    return process_response(response)
+
 @ask.intent("INTENT_IFAN_SpeedDown")
+def dec_speed_on_modbus():
+    response = ifan_interface.inc_dec_speed(0)
+    return process_response(response)
+
+
+
 
 @ask.intent("INTENT_IFAN_Status")
 

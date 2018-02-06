@@ -35,6 +35,7 @@ def set_direction(clock1):
     print(result)
     return(0)
 
+
 def set_speed(to):
     client = ModbusTcpClient(KstrFanIP, KintFanPort)
     result = client.write_register(KpcbSpdReg, to, unit=KmbUnitID)
@@ -43,3 +44,27 @@ def set_speed(to):
     return(0)
 
 
+def inc_dec_speed(up1):
+    client = ModbusTcpClient(KstrFanIP, KintFanPort)
+    result = client.read_holding_registers(KpcbSpdReg, 1, unit=KmbUnitID)
+    print(result)
+    if result.function_code < 0x80:
+        current_speed = result.registers[0]
+
+        if up1 == 1:
+            current_speed += 1
+        else:
+            current_speed -= 1
+            
+        if current_speed > 10:
+            current_speed = 10
+        elif current_speed < 1:
+            current_speed = 1
+
+        result = client.write_register(KpcbSpdReg, current_speed, unit=KmbUnitID)
+        print('up dn speed: \n')
+        print(result)
+        return(0)
+    else:
+        return(1)
+        
