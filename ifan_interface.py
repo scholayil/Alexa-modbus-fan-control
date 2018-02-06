@@ -2,7 +2,7 @@
 from pymodbus.client.sync import ModbusTcpClient
 
 #Typical Modbus IP stuff; later configure from app
-KstrFanIP='192.168.2.15'
+KstrFanIP='192.168.2.16'
 KintFanPort=502
 KmbUnitID=1
 
