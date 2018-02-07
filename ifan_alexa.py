@@ -33,9 +33,14 @@ def launch():
 
 
 @ask.intent("AMAZON.CancelIntent")
+@ask.intent("AMAZON.StopIntent")
 def ends():
     end_msg = render_template('cancel')
     return statement(end_msg)
+@ask.intent("AMAZON.HelpIntent")
+def helps():
+    msg = render_template('help')
+    return question(msg)
 
 
 @ask.intent("INTENT_IFAN_GetSiteID")
@@ -95,7 +100,12 @@ def dec_speed_on_modbus():
 
 
 @ask.intent("INTENT_IFAN_Status")
+def get_status_on_modbus():
+    response = ifan_interface.get_status()
+    return process_response(response)
 
+
+@ask.intent("{}")
 def dave():
     msg =  render_template('mainframe')
     return question(msg)
